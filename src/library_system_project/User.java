@@ -6,7 +6,15 @@
 package library_system_project;
 
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -17,14 +25,94 @@ public class User extends javax.swing.JFrame {
     /**
      * Creates new form User
      */
+    int id;
+    String username;
+    
     public User() {
         initComponents();
+    }
+    public User(String name, int id) {
+        this.id = id;
+        this.username = name;
+        initComponents();
+        usernameS(username);
         setLocationRelativeTo(null);
         icon();
+        hidePanels();
+        showBooks();
+        showTransactions();
+        
+        
+    }
+    
+    private void showBooks(){
+        try {
+            Connection connect = DbConnection.getConnection();
+            String sql = "select * from `tblbooks`";
+            Statement s = connect.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            
+            DefaultTableModel model = (DefaultTableModel) tableBooks.getModel();
+            model.setRowCount(0);
+            for(int i = 0; rs.next(); i++){
+                String row[] = new String[4];
+                row[0] = rs.getString("bookId");
+                row[1] = rs.getString("booktitle");
+                row[2] = rs.getString("bookauthor");
+                row[3] = rs.getString("status");
+                
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void showTransactions(){
+        try {
+            Connection connect = DbConnection.getConnection();
+            String sql = "select tb.transactId, tb.dateborrowed, tb.datereturned, tb.status, tb.librarian,"
+                    + " tb.bookId, tb2.booktitle from tbltransact tb INNER JOIN tblbooks tb2 ON tb.bookId = tb2.bookId WHERE tb.userid = " + id;
+            Statement s = connect.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            
+            DefaultTableModel model = (DefaultTableModel) tableborrowedpending.getModel();
+            DefaultTableModel model2 = (DefaultTableModel) tableborrowed.getModel();
+            model.setRowCount(0);
+            model2.setRowCount(0);
+            String row[] = new String[4];
+            for (int i = 0; rs.next(); i++) {
+                if (rs.getString("status").equals("Returned")) {
+                    row[0] = rs.getString("transactId");
+                    row[1] = rs.getString("booktitle");
+                    row[2] = rs.getString("datereturned");
+                    row[3] = rs.getString("librarian");
+                    
+                    model2.addRow(row);
+                }else{
+                    row = new String[5];
+                    row[0] = rs.getString("bookId");
+                    row[1] = rs.getString("booktitle");
+                    row[2] = rs.getString("status");
+                    row[3] = rs.getString("dateborrowed");
+                    row[4] = rs.getString("librarian");
+                    
+                    model.addRow(row);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     void usernameS(String username){
         lbluserS.setText(username);
+    }
+    
+    private void hidePanels(){
+        BorrowedHistory.setVisible(false);
+        PendingBorrowed.setVisible(false);
+        ListofBooks.setVisible(false);
     }
      private void icon(){
     setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("244650586_432577631535911_8014217671605978899_n.png")));
@@ -40,6 +128,22 @@ public class User extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         ListofBooks = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableBooks = new javax.swing.JTable();
+        btnsearch = new javax.swing.JButton();
+        txtsearch = new javax.swing.JTextField();
+        btnaddborrow = new javax.swing.JButton();
+        PendingBorrowed = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableborrowedpending = new javax.swing.JTable();
+        btnsave = new javax.swing.JButton();
+        btnremove = new javax.swing.JButton();
+        BorrowedHistory = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableborrowed = new javax.swing.JTable();
         btnlogout = new javax.swing.JButton();
         btnhistory = new javax.swing.JButton();
         btnpending = new javax.swing.JButton();
@@ -66,19 +170,193 @@ public class User extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ListofBooks.setBackground(new java.awt.Color(141, 193, 207));
+        ListofBooks.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout ListofBooksLayout = new javax.swing.GroupLayout(ListofBooks);
-        ListofBooks.setLayout(ListofBooksLayout);
-        ListofBooksLayout.setHorizontalGroup(
-            ListofBooksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
-        );
-        ListofBooksLayout.setVerticalGroup(
-            ListofBooksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
-        );
+        jLabel9.setBackground(new java.awt.Color(7, 115, 149));
+        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("List Of Books");
+        jLabel9.setOpaque(true);
+        ListofBooks.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, -1));
+
+        tableBooks.setBackground(new java.awt.Color(141, 193, 207));
+        tableBooks.setFont(new java.awt.Font("Ink Free", 1, 12)); // NOI18N
+        tableBooks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "             Book ID ", "               Title ", "             Author ", "             Status "
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableBooks);
+
+        ListofBooks.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 480, 480));
+
+        btnsearch.setBackground(new java.awt.Color(255, 255, 255));
+        btnsearch.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        btnsearch.setText("Search");
+        btnsearch.setBorder(null);
+        btnsearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnsearchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnsearchMouseExited(evt);
+            }
+        });
+        btnsearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsearchActionPerformed(evt);
+            }
+        });
+        btnsearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btnsearchKeyReleased(evt);
+            }
+        });
+        ListofBooks.add(btnsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 70, 20));
+
+        txtsearch.setFont(new java.awt.Font("Ink Free", 1, 12)); // NOI18N
+        ListofBooks.add(txtsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 360, -1));
+
+        btnaddborrow.setBackground(new java.awt.Color(255, 255, 255));
+        btnaddborrow.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        btnaddborrow.setText("Add to Borrow List");
+        btnaddborrow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(7, 115, 149), 3, true));
+        btnaddborrow.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnaddborrowMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnaddborrowMouseExited(evt);
+            }
+        });
+        btnaddborrow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddborrowActionPerformed(evt);
+            }
+        });
+        ListofBooks.add(btnaddborrow, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 560, 190, 20));
 
         jPanel1.add(ListofBooks, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 480, 590));
+
+        PendingBorrowed.setBackground(new java.awt.Color(141, 193, 207));
+        PendingBorrowed.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setBackground(new java.awt.Color(7, 115, 149));
+        jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Pending/Borrowed Books");
+        jLabel10.setOpaque(true);
+        PendingBorrowed.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 40));
+
+        tableborrowedpending.setBackground(new java.awt.Color(141, 193, 207));
+        tableborrowedpending.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        tableborrowedpending.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "      BookID", "       Title", "       Status", " Date Borrowed  ", "       Librarian "
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tableborrowedpending);
+
+        PendingBorrowed.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 480, 500));
+
+        btnsave.setBackground(new java.awt.Color(255, 255, 255));
+        btnsave.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
+        btnsave.setText("Save");
+        btnsave.setBorder(null);
+        btnsave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnsaveMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnsaveMouseExited(evt);
+            }
+        });
+        btnsave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsaveActionPerformed(evt);
+            }
+        });
+        PendingBorrowed.add(btnsave, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 550, 90, 30));
+
+        btnremove.setBackground(new java.awt.Color(255, 255, 255));
+        btnremove.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
+        btnremove.setText("Remove");
+        btnremove.setBorder(null);
+        btnremove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnremoveMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnremoveMouseExited(evt);
+            }
+        });
+        btnremove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnremoveActionPerformed(evt);
+            }
+        });
+        PendingBorrowed.add(btnremove, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 550, 90, 30));
+
+        jPanel1.add(PendingBorrowed, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 480, 590));
+
+        BorrowedHistory.setBackground(new java.awt.Color(141, 193, 207));
+        BorrowedHistory.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setBackground(new java.awt.Color(7, 115, 149));
+        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Borrowed History");
+        jLabel11.setOpaque(true);
+        BorrowedHistory.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 40));
+
+        tableborrowed.setBackground(new java.awt.Color(141, 193, 207));
+        tableborrowed.setFont(new java.awt.Font("Ink Free", 0, 14)); // NOI18N
+        tableborrowed.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "  Transaction ID", "         Title ", " Date Returned", "        Librarian "
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tableborrowed);
+
+        BorrowedHistory.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 40, 480, 550));
+
+        jPanel1.add(BorrowedHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 480, 590));
 
         btnlogout.setBackground(new java.awt.Color(255, 255, 255));
         btnlogout.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
@@ -147,6 +425,11 @@ public class User extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnlistMouseExited(evt);
+            }
+        });
+        btnlist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlistActionPerformed(evt);
             }
         });
         jPanel1.add(btnlist, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 370, 340, 30));
@@ -224,11 +507,13 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnpendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpendingActionPerformed
-        // TODO add your handling code here:
+        hidePanels();
+        PendingBorrowed.setVisible(true);
     }//GEN-LAST:event_btnpendingActionPerformed
 
     private void btnhistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhistoryActionPerformed
-        // TODO add your handling code here:
+        hidePanels();
+         BorrowedHistory.setVisible(true);
     }//GEN-LAST:event_btnhistoryActionPerformed
 
     private void btnlistMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnlistMouseEntered
@@ -271,6 +556,167 @@ public class User extends javax.swing.JFrame {
         dispose();}
     }//GEN-LAST:event_btnlogoutActionPerformed
 
+    private void btnsearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsearchMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsearchMouseEntered
+
+    private void btnsearchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsearchMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsearchMouseExited
+
+    private void btnsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsearchActionPerformed
+        String regex = txtsearch.getText();
+        filterTable(regex);
+    }//GEN-LAST:event_btnsearchActionPerformed
+
+    private void btnaddborrowMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddborrowMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnaddborrowMouseEntered
+
+    private void btnaddborrowMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddborrowMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnaddborrowMouseExited
+
+    private void btnaddborrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddborrowActionPerformed
+        int rows = tableBooks.getSelectedRowCount();
+        if(rows != 1){
+            JOptionPane.showMessageDialog(null, "Please Select a single book", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            int row = tableBooks.getSelectedRow();
+            
+            String bookId = tableBooks.getValueAt(row, 0).toString();
+            String bookTitle = tableBooks.getValueAt(row, 1).toString();
+            String status = tableBooks.getValueAt(row, 3).toString();
+            
+            if(status.equals("Borrowed")){
+                JOptionPane.showMessageDialog(null, "Book " + bookTitle + " is Borrowed.", "Error", JOptionPane.ERROR_MESSAGE);
+            }else{
+                String borrow[] = new String[5];
+                borrow[0] = bookId;
+                borrow[1] = bookTitle;
+                borrow[2] = "Pending";
+                borrow[3] = "--";
+                borrow[4] = "--";
+                
+                DefaultTableModel model = (DefaultTableModel) tableborrowedpending.getModel();
+                model.addRow(borrow);
+                JOptionPane.showMessageDialog(null, "Book " + bookTitle + " is added for request.");
+            }
+            
+//            try {
+//                Connection connect = DbConnection.getConnection();
+//                String sql = "INSERT INTO tbltransact (userid, bookid, dateborrowed, datereturned, status, librarian) "
+//                        + "VALUES(" + id + ", " + bookId + ", '--', '--', 'Pending', '--')";
+//                PreparedStatement pst = connect.prepareStatement(sql);
+//                pst.execute();
+//                showTransactions();
+//                
+//                JOptionPane.showMessageDialog(null, "Book " + bookTitle + " has been requested.", "Success", JOptionPane.PLAIN_MESSAGE);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+        }
+    }//GEN-LAST:event_btnaddborrowActionPerformed
+
+    private void btnsaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsaveMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsaveMouseEntered
+
+    private void btnsaveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsaveMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsaveMouseExited
+
+    private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
+        int rows = tableborrowedpending.getSelectedRowCount();
+        if(rows != 1){
+            JOptionPane.showMessageDialog(null, "Please Select a single book", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            int row = tableborrowedpending.getSelectedRow();
+
+            String bookId = tableborrowedpending.getValueAt(row, 0).toString();
+            String bookTitle = tableborrowedpending.getValueAt(row, 1).toString();
+            String status = tableborrowedpending.getValueAt(row, 2).toString();
+
+            try {
+                Connection connect = DbConnection.getConnection();
+
+                if (status.equals("Pending")) {
+                    
+                String sql = "INSERT INTO tbltransact (userid, bookid, dateborrowed, datereturned, status, librarian) "
+                        + "VALUES(" + id + ", " + bookId + ", '--', '--', 'Requested', '--')";
+                PreparedStatement pst = connect.prepareStatement(sql);
+                pst.execute();
+                showTransactions();
+                
+                JOptionPane.showMessageDialog(null, "Book " + bookTitle + " has been requested.", "Success", JOptionPane.PLAIN_MESSAGE);
+            
+                    showTransactions();
+                } else {
+                    JOptionPane.showMessageDialog(null, "The book you selected is Pending.", "Error", JOptionPane.ERROR_MESSAGE);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnsaveActionPerformed
+
+    private void btnremoveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnremoveMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnremoveMouseEntered
+
+    private void btnremoveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnremoveMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnremoveMouseExited
+
+    private void btnremoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnremoveActionPerformed
+        int rows = tableborrowedpending.getSelectedRowCount();
+        if(rows != 1){
+            JOptionPane.showMessageDialog(null, "Please Select a single book", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            int row = tableborrowedpending.getSelectedRow();
+
+            String transactionId = tableborrowedpending.getValueAt(row, 0).toString();
+            String bookTitle = tableborrowedpending.getValueAt(row, 1).toString();
+            String status = tableborrowedpending.getValueAt(row, 2).toString();
+            
+            if (status.equals("Pending")) {
+                    DefaultTableModel model = (DefaultTableModel) tableborrowedpending.getModel();
+                    
+                    model.removeRow(row);
+                    JOptionPane.showMessageDialog(null, "Book " + bookTitle + " has been removed.", "Success", JOptionPane.PLAIN_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "The book you selected has been  " + status + " already.", "Error", JOptionPane.ERROR_MESSAGE);
+
+                }
+            try {
+                Connection connect = DbConnection.getConnection();
+
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnremoveActionPerformed
+
+    private void btnlistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlistActionPerformed
+        hidePanels();
+        ListofBooks.setVisible(true);
+    }//GEN-LAST:event_btnlistActionPerformed
+
+    private void btnsearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnsearchKeyReleased
+        
+    }//GEN-LAST:event_btnsearchKeyReleased
+
+    private void filterTable(String regex){
+        DefaultTableModel model = (DefaultTableModel) tableBooks.getModel();
+        TableRowSorter <DefaultTableModel> tr = new TableRowSorter <DefaultTableModel> (model);
+        tableBooks.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(regex));
+    }
     /**
      * @param args the command line arguments
      */
@@ -307,12 +753,20 @@ public class User extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel BorrowedHistory;
     private javax.swing.JPanel ListofBooks;
+    private javax.swing.JPanel PendingBorrowed;
+    private javax.swing.JButton btnaddborrow;
     private javax.swing.JButton btnhistory;
     private javax.swing.JButton btnlist;
     private javax.swing.JButton btnlogout;
     private javax.swing.JButton btnpending;
+    private javax.swing.JButton btnremove;
+    private javax.swing.JButton btnsave;
+    private javax.swing.JButton btnsearch;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -320,7 +774,15 @@ public class User extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lbluserS;
+    private javax.swing.JTable tableBooks;
+    private javax.swing.JTable tableborrowed;
+    private javax.swing.JTable tableborrowedpending;
+    private javax.swing.JTextField txtsearch;
     // End of variables declaration//GEN-END:variables
 }

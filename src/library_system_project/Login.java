@@ -89,6 +89,11 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(ckbshowpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, -1, 20));
 
         pswdlogin.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        pswdlogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pswdloginActionPerformed(evt);
+            }
+        });
         jPanel1.add(pswdlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, 200, 30));
 
         txtusername.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
@@ -239,12 +244,9 @@ public class Login extends javax.swing.JFrame {
                     
                     
                     }else{
-                     User us = new User();
+                     User us = new User(username, rs.getInt("UserID"));
                     us.setVisible(true);
-                    this.setVisible(true);
                     this.setVisible(false);
-                    
-                    us.usernameS(username);
                     }
                 }else{
                 JOptionPane.showMessageDialog(null, "Incorrect username or password.");
@@ -269,6 +271,10 @@ public class Login extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void pswdloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pswdloginActionPerformed
+        btnLoginActionPerformed(evt);
+    }//GEN-LAST:event_pswdloginActionPerformed
 
     /**
      * @param args the command line arguments
