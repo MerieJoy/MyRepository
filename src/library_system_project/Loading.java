@@ -21,7 +21,7 @@ public class Loading extends javax.swing.JFrame {
         icon();
     }
      private void icon(){
-    setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("244650586_432577631535911_8014217671605978899_n.png")));
+    setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("iconnn.jpg")));
     }
 
     /**
@@ -34,7 +34,6 @@ public class Loading extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         lblload = new javax.swing.JLabel();
         brload = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
@@ -44,44 +43,35 @@ public class Loading extends javax.swing.JFrame {
         setFont(new java.awt.Font("Ink Free", 1, 10)); // NOI18N
         setUndecorated(true);
 
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 3, true));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("LIBRARY MANAGEMENT SYSTEM");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 300, -1));
 
         lblload.setFont(new java.awt.Font("Ink Free", 1, 11)); // NOI18N
         lblload.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblload.setText("100%");
-        jPanel1.add(lblload, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 280, 20));
+        lblload.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
+        jPanel1.add(lblload, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 370, 20));
 
-        brload.setBackground(new java.awt.Color(51, 153, 255));
-        brload.setForeground(new java.awt.Color(0, 153, 153));
-        jPanel1.add(brload, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 280, 20));
+        brload.setBackground(new java.awt.Color(0, 204, 204));
+        brload.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(brload, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 370, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Downloads\\download.png")); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -50, 620, 260));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/library_system_project/loading.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 240));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(317, 156));
+        setSize(new java.awt.Dimension(410, 240));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -123,7 +113,6 @@ public class Loading extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JProgressBar brload;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JLabel lblload;
     // End of variables declaration//GEN-END:variables

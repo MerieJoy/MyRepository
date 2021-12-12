@@ -1,12 +1,13 @@
-
 package library_system_project;
 
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
@@ -14,24 +15,70 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class Regform extends javax.swing.JFrame {
+
     Connection connect;
     ResultSet ab;
     PreparedStatement pre;
-    
-    
-   
-    
-    
+    int id = -1;
+
     /**
      * Creates new form Regform
      */
     public Regform() {
         initComponents();
         icon();
-        
+        setResizable(false);
     }
-     private void icon(){
-    setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("244650586_432577631535911_8014217671605978899_n.png")));
+
+    public Regform(int id) {
+        this.id = id;
+        initComponents();
+        icon();
+        setResizable(false);
+        cbusertype.setEnabled(true);
+
+        if (id > 0) {
+            btnsubmit.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\regupdate.png"));
+            updateUser(id);
+        }
+    }
+
+    private void updateUser(int id) {
+        connect = DbConnection.getConnection();
+
+        try {
+            Statement s = connect.createStatement();
+
+            ab = s.executeQuery("Select * from tablelms where UserID = " + id);
+
+            while (ab.next()) {
+                txtusername.setText(ab.getString("username"));
+                pswdreg.setText(ab.getString("password"));
+                pswdretype.setText(ab.getString("password"));
+                txtnumber.setText(ab.getString("contact").replace("+63", ""));
+                txtemail.setText(ab.getString("email"));
+                txtfname.setText(ab.getString("firstname"));
+                txtmid.setText(ab.getString("mid"));
+                txtlname.setText(ab.getString("lastname"));
+                txtaddress.setText(ab.getString("address"));
+                cbgender.setSelectedItem(ab.getString("gender"));
+                cbusertype.setSelectedItem(ab.getString("usertype"));
+                ((JTextField) jDatebday.getDateEditor().getUiComponent()).setText(ab.getString("bday"));
+
+                if (ab.getString("Status").equals("Activated")) {
+                    btnclear.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\deactivate.png"));
+                } else {
+                    btnclear.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\activate.png"));
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void icon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("iconnn.jpg")));
     }
 
     /**
@@ -47,7 +94,6 @@ public class Regform extends javax.swing.JFrame {
         btnback = new javax.swing.JButton();
         btnsubmit = new javax.swing.JButton();
         btnclear = new javax.swing.JButton();
-        jLabel17 = new javax.swing.JLabel();
         pswdretype = new javax.swing.JPasswordField();
         cbusertype = new javax.swing.JComboBox<>();
         cbgender = new javax.swing.JComboBox<>();
@@ -60,15 +106,17 @@ public class Regform extends javax.swing.JFrame {
         txtlname = new javax.swing.JTextField();
         txtfname = new javax.swing.JTextField();
         txtusername = new javax.swing.JTextField();
+        txtshowpas = new javax.swing.JLabel();
+        txtshow = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         lbage = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jDatebday = new com.toedter.calendar.JDateChooser();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -78,14 +126,14 @@ public class Regform extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Library Management System/create_account/");
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -93,11 +141,13 @@ public class Regform extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(50, 157, 156));
+        jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnback.setBackground(new java.awt.Color(255, 255, 255));
         btnback.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnback.setText("Back");
+        btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\rback.png")); // NOI18N
+        btnback.setOpaque(false);
         btnback.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnbackMouseEntered(evt);
@@ -111,11 +161,12 @@ public class Regform extends javax.swing.JFrame {
                 btnbackActionPerformed(evt);
             }
         });
-        jPanel1.add(btnback, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 690, 90, -1));
+        jPanel1.add(btnback, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 420, 93, 38));
 
         btnsubmit.setBackground(new java.awt.Color(255, 255, 255));
         btnsubmit.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnsubmit.setText("Submit");
+        btnsubmit.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\submit.png")); // NOI18N
+        btnsubmit.setOpaque(false);
         btnsubmit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnsubmitMouseEntered(evt);
@@ -129,11 +180,17 @@ public class Regform extends javax.swing.JFrame {
                 btnsubmitActionPerformed(evt);
             }
         });
-        jPanel1.add(btnsubmit, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 690, -1, -1));
+        jPanel1.add(btnsubmit, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 420, 103, 38));
 
         btnclear.setBackground(new java.awt.Color(255, 255, 255));
         btnclear.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnclear.setText("Clear");
+        btnclear.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\rclear.png")); // NOI18N
+        btnclear.setOpaque(false);
+        btnclear.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                btnclearFocusGained(evt);
+            }
+        });
         btnclear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnclearMouseEntered(evt);
@@ -147,25 +204,28 @@ public class Regform extends javax.swing.JFrame {
                 btnclearActionPerformed(evt);
             }
         });
-        jPanel1.add(btnclear, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 690, 90, -1));
+        jPanel1.add(btnclear, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 420, 93, 38));
 
-        jLabel17.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel17.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Confirm Password:");
-        jLabel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel17.setOpaque(true);
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 140, -1));
-
-        pswdretype.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        pswdretype.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        pswdretype.setToolTipText("Re-enter password");
+        pswdretype.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pswdretypeFocusLost(evt);
+            }
+        });
         pswdretype.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pswdretypeActionPerformed(evt);
             }
         });
-        jPanel1.add(pswdretype, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 210, 270, -1));
+        pswdretype.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pswdretypeKeyTyped(evt);
+            }
+        });
+        jPanel1.add(pswdretype, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 190, -1));
 
-        cbusertype.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        cbusertype.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cbusertype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
         cbusertype.setEnabled(false);
         cbusertype.addActionListener(new java.awt.event.ActionListener() {
@@ -173,270 +233,332 @@ public class Regform extends javax.swing.JFrame {
                 cbusertypeActionPerformed(evt);
             }
         });
-        jPanel1.add(cbusertype, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 630, 270, -1));
+        jPanel1.add(cbusertype, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 160, -1));
 
-        cbgender.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        cbgender.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cbgender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(Select gender)", "Female", "Male", "Prefer Not To Answer" }));
-        jPanel1.add(cbgender, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, 270, -1));
+        jPanel1.add(cbgender, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 280, 140, -1));
 
-        txtemail.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        txtemail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtemail.setToolTipText("Enter email address");
         txtemail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtemailActionPerformed(evt);
             }
         });
-        jPanel1.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 590, 270, -1));
+        jPanel1.add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 150, 160, -1));
 
         txtnumber1.setEditable(false);
         txtnumber1.setBackground(new java.awt.Color(255, 255, 255));
-        txtnumber1.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        txtnumber1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtnumber1.setText("+63");
         txtnumber1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtnumber1ActionPerformed(evt);
             }
         });
-        jPanel1.add(txtnumber1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 550, 40, -1));
+        jPanel1.add(txtnumber1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, 40, -1));
 
-        txtnumber.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        txtnumber.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtnumber.setToolTipText("Enter contact number");
         txtnumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtnumberActionPerformed(evt);
             }
         });
         txtnumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtnumberKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtnumberKeyTyped(evt);
             }
         });
-        jPanel1.add(txtnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 550, 230, -1));
+        jPanel1.add(txtnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 110, 120, -1));
 
-        txtaddress.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        txtaddress.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtaddress.setToolTipText("Enter address");
         txtaddress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtaddressActionPerformed(evt);
             }
         });
-        jPanel1.add(txtaddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, 270, -1));
+        jPanel1.add(txtaddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 320, 330, -1));
 
-        pswdreg.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        pswdreg.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        pswdreg.setToolTipText("Enter password");
+        pswdreg.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pswdregFocusLost(evt);
+            }
+        });
         pswdreg.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 pswdregPropertyChange(evt);
             }
         });
-        jPanel1.add(pswdreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, 270, -1));
+        pswdreg.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pswdregKeyTyped(evt);
+            }
+        });
+        jPanel1.add(pswdreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 190, -1));
 
-        txtmid.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
-        jPanel1.add(txtmid, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 340, 50, -1));
+        txtmid.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtmid.setToolTipText("Enter middle initial");
+        txtmid.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtmidKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtmid, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 280, 60, -1));
 
-        txtlname.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
-        jPanel1.add(txtlname, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 340, 150, -1));
+        txtlname.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtlname.setToolTipText("Enter last name");
+        jPanel1.add(txtlname, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 160, -1));
 
-        txtfname.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
-        jPanel1.add(txtfname, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 300, 270, -1));
+        txtfname.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtfname.setToolTipText("Enter first name");
+        jPanel1.add(txtfname, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 160, -1));
 
-        txtusername.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
-        jPanel1.add(txtusername, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, 270, -1));
+        txtusername.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtusername.setToolTipText("Enter username");
+        jPanel1.add(txtusername, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 190, -1));
 
-        jLabel22.setBackground(new java.awt.Color(32, 80, 114));
+        txtshowpas.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txtshowpas.setForeground(new java.awt.Color(204, 0, 51));
+        jPanel1.add(txtshowpas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, 160, 20));
+
+        txtshow.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        txtshow.setForeground(new java.awt.Color(204, 0, 51));
+        jPanel1.add(txtshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 130, 160, 20));
+
+        jLabel22.setBackground(new java.awt.Color(16, 119, 124));
         jLabel22.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Contact and User Type");
         jLabel22.setOpaque(true);
-        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 520, 170, 20));
+        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 180, 20));
 
-        jLabel21.setBackground(new java.awt.Color(32, 80, 114));
+        jLabel21.setBackground(new java.awt.Color(16, 119, 124));
         jLabel21.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Personal Info");
         jLabel21.setOpaque(true);
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 270, 130, 20));
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 160, 20));
 
-        jLabel20.setBackground(new java.awt.Color(32, 80, 114));
+        jLabel20.setBackground(new java.awt.Color(16, 119, 124));
         jLabel20.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("Account Details:");
+        jLabel20.setText("Account Details");
         jLabel20.setOpaque(true);
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 130, 20));
-
-        jLabel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(32, 80, 114), 3));
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 530, 460, 140));
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 140, 20));
 
         lbage.setBackground(new java.awt.Color(255, 255, 255));
-        lbage.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        lbage.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lbage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         lbage.setOpaque(true);
-        jPanel1.add(lbage, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 460, 40, 20));
+        jPanel1.add(lbage, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 90, 20));
 
-        jLabel15.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel15.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel15.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel15.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Age:");
         jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel15.setOpaque(true);
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 460, 40, 20));
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, 50, 20));
 
         jDatebday.setBackground(new java.awt.Color(255, 255, 255));
+        jDatebday.setToolTipText("Select birth date");
         jDatebday.setDateFormatString("yyyy/MM/dd");
-        jDatebday.setFont(new java.awt.Font("Ink Free", 1, 12)); // NOI18N
+        jDatebday.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jDatebday.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jDatebdayPropertyChange(evt);
             }
         });
-        jPanel1.add(jDatebday, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 460, 170, 20));
+        jPanel1.add(jDatebday, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, 150, 20));
 
-        jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(32, 80, 114), 3));
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 110, 460, 140));
+        jLabel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(16, 119, 124), 2, true));
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 300, 160));
 
-        jLabel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(32, 80, 114), 3));
-        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 460, 220));
+        jLabel13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(16, 119, 124), 2, true));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 770, 140));
 
-        jLabel14.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel14.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(16, 119, 124), 2, true));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 260, 160));
+
+        jLabel14.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel14.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Birthday:");
         jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel14.setOpaque(true);
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 460, 140, 20));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 100, 20));
 
-        jLabel12.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel12.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel12.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel12.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("User Type:");
         jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel12.setOpaque(true);
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 630, 140, 20));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 90, 20));
 
-        jLabel11.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel11.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel11.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Email:");
         jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel11.setOpaque(true);
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 590, 140, 20));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, 90, 20));
 
-        jLabel10.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel10.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel10.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel10.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Contact #:");
         jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel10.setOpaque(true);
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 550, 140, 20));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, 90, 20));
 
-        jLabel9.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel9.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel9.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Address:");
         jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel9.setOpaque(true);
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 420, 140, 20));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 100, 20));
 
-        jLabel8.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel8.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel8.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Gender:");
         jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel8.setOpaque(true);
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 380, 140, 20));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 280, 100, 20));
 
-        jLabel7.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel7.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel7.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("M.I:");
+        jLabel7.setText("Middle Initial:");
         jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel7.setOpaque(true);
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 340, 50, 20));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 280, 100, 20));
 
-        jLabel6.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel6.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel6.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Last Name:");
         jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel6.setOpaque(true);
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, 140, 20));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 100, 20));
 
-        jLabel5.setBackground(new java.awt.Color(86, 197, 149));
-        jLabel5.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel5.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("First Name:");
         jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel5.setOpaque(true);
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 300, 140, 20));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 100, 20));
 
-        jLabel4.setBackground(new java.awt.Color(86, 197, 149));
+        jLabel17.setBackground(new java.awt.Color(16, 119, 124));
+        jLabel17.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\userpass.png")); // NOI18N
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 50, 40));
+
+        jLabel4.setBackground(new java.awt.Color(16, 119, 124));
         jLabel4.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Password:");
-        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel4.setOpaque(true);
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 140, -1));
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\userpass.png")); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 50, 40));
 
-        jLabel3.setBackground(new java.awt.Color(86, 197, 149));
+        jLabel3.setBackground(new java.awt.Color(16, 119, 124));
         jLabel3.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Username:");
-        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel3.setOpaque(true);
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, 140, 20));
-
-        jLabel2.setBackground(new java.awt.Color(32, 80, 114));
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("CREATE ACCOUNT");
-        jLabel2.setOpaque(true);
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 500, 60));
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\userlogin.png")); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 50, 40));
 
         jLabel1.setBackground(new java.awt.Color(207, 244, 210));
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\reg.png")); // NOI18N
         jLabel1.setOpaque(true);
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 500, 730));
-
-        jLabel13.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Downloads\\244384172_293169668991008_7683881940037026863_n.png")); // NOI18N
-        jLabel13.setText("jLabel13");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 180, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, 510));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 768, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        setSize(new java.awt.Dimension(889, 807));
+        setSize(new java.awt.Dimension(886, 549));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnclearActionPerformed
-       txtusername.setText("");
-       pswdreg.setText("");
-       txtfname.setText("");
-       txtlname.setText("");
-       txtmid.setText("");
-       cbgender.setSelectedIndex(0);
-       txtaddress.setText("");
-       txtnumber.setText("");
-       txtemail.setText("");
-       cbusertype.setSelectedIndex(0);
-       jDatebday.setCalendar(null);
-       lbage.setText("");
-       pswdretype.setText("");
-       
+        if (id > 0) {
+            String icon = btnclear.getIcon().toString();
+            String status = "";
+            if (icon.equals("C:\\Users\\win10dell\\Desktop\\LMS Icon\\activate.png")) {
+                status = "Activated";
+            } else {
+                status = "Deactivated";
+            }
+            try {
+                int confirm = JOptionPane.showConfirmDialog(null, "Are you sure to " + status.replace("d", "") + " account?", status.replace("d", ""), JOptionPane.OK_CANCEL_OPTION);
+
+                if (confirm == 0) {
+                    connect = DbConnection.getConnection();
+                    pre = connect.prepareStatement("UPDATE tablelms SET status = '" + status + "' WHERE UserID = " + id);
+                    pre.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Account " + status, "Success", JOptionPane.PLAIN_MESSAGE);
+                    this.dispose();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            txtusername.setText("");
+            pswdreg.setText("");
+            txtfname.setText("");
+            txtlname.setText("");
+            txtmid.setText("");
+            cbgender.setSelectedIndex(0);
+            txtaddress.setText("");
+            txtnumber.setText("");
+            txtemail.setText("");
+            cbusertype.setSelectedIndex(0);
+            jDatebday.setCalendar(null);
+            lbage.setText("");
+            pswdretype.setText("");
+            txtshow.setText("");
+        }
+
     }//GEN-LAST:event_btnclearActionPerformed
 
     private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
+        if (id == -1) {
+            Login mj = new Login();
+            mj.setVisible(true);
+        }
         this.dispose();
-        Login mj = new Login();
-        mj.setVisible(true);
     }//GEN-LAST:event_btnbackActionPerformed
 
     private void txtaddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtaddressActionPerformed
@@ -453,78 +575,161 @@ public class Regform extends javax.swing.JFrame {
 
     private void btnsubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsubmitActionPerformed
         Connection connect = DbConnection.getConnection();
-        
-        if (txtusername.getText().equals("")){
+
+        if (txtusername.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill up blank fields.");
-        }else if(pswdreg.getText().equals("")){
+        } else if (pswdreg.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill up blank fields.");
-        }else if(txtfname.getText().equals("")){
+        } else if (txtfname.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill up blank fields.");
-        }else if(txtlname.getText().equals("")){
+        } else if (txtlname.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill up blank fields.");
-    }    else if(cbgender.getSelectedItem().equals("")){
+        } else if (cbgender.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Please Select gender.");
+        } else if (txtaddress.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill up blank fields.");
-    }   else if(txtaddress.getText().equals("")){
+        } else if (txtnumber.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill up blank fields.");
-    }   else if(txtnumber.getText().equals("")){
+        } else if (txtemail.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill up blank fields.");
-    }   else if(txtemail.getText().equals("")){
+        } else if (cbusertype.getSelectedItem().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill up blank fields.");
-    }   else if(cbusertype.getSelectedItem().equals("")){
-            JOptionPane.showMessageDialog(null, "Please fill up blank fields.");
-    }   else if (jDatebday.getDate().equals("")){
+        } else if (jDatebday.getDate().equals("")) {
             JOptionPane.showMessageDialog(null, "Please select birth date.");
-            
-    }
-    
-    else{
-        
-        
-        try{
-                String sql = "insert into `tablelms` (`username`, `password`,`firstname`,`lastname`,`mid`,`gender`,`address`,`contact`, `email`,`usertype`, `bday`, `age`) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-                pre = connect.prepareStatement(sql);
-                pre.setString(1, txtusername.getText());
-                
-                if (pswdreg.getText().equals(pswdretype.getText())){
-                    pre.setString(2, pswdreg.getText());
-                }else{
-                    JOptionPane.showMessageDialog(null, "Password unmatched.");
-                    return;
-                }
-                pre.setString(3, txtfname.getText());
-                pre.setString(4, txtlname.getText());
-                pre.setString(5, txtmid.getText());
-                pre.setString(6, (String) cbgender.getSelectedItem());
-                pre.setString(7, txtaddress.getText());
-                pre.setString(8, txtnumber.getText());
-                pre.setString(9, txtemail.getText());
-                pre.setString(10, (String) cbusertype.getSelectedItem());
-                pre.setString(11, ((JTextField)jDatebday.getDateEditor().getUiComponent()).getText());
-                
-                if (Integer.parseInt(lbage.getText())<=10){
-                    JOptionPane.showMessageDialog(null, "Under Restricted Age");
-                }else{
+
+        } else {
+            try {
+                String icon = btnsubmit.getIcon().toString();
+                if (icon.equals("C:\\Users\\win10dell\\Desktop\\LMS Icon\\submit.png")) {
+
+                    String sql = "insert into `tablelms` (`username`, `password`,`firstname`,`lastname`,`mid`,`gender`,`address`,`contact`, `email`,`usertype`, `bday`, `age`) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+                    Statement s = connect.createStatement();
+                    ResultSet rs = s.executeQuery("SELECT * FROM tablelms WHERE username = '" + txtusername.getText() + "'");
+
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(null, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    pre = connect.prepareStatement(sql);
+                    pre.setString(1, txtusername.getText());
+
+                    if (pswdreg.getText().equals(pswdretype.getText())) {
+                        pre.setString(2, pswdreg.getText());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Password unmatched.");
+                        return;
+                    }
+                    pre.setString(3, txtfname.getText());
+                    pre.setString(4, txtlname.getText());
+                    pre.setString(5, txtmid.getText());
+                    pre.setString(6, (String) cbgender.getSelectedItem());
+                    pre.setString(7, txtaddress.getText());
+
+                    if (txtshow.getText().isEmpty()) {
+                        pre.setString(8, "+63" + txtnumber.getText());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Contact number must contain 10 Digits.");
+                        return;
+                    }
+
+                    pre.setString(9, txtemail.getText());
+                    pre.setString(10, (String) cbusertype.getSelectedItem());
+                    pre.setString(11, ((JTextField) jDatebday.getDateEditor().getUiComponent()).getText());
+
+                    if (Integer.parseInt(lbage.getText()) <= 10) {
+                        JOptionPane.showMessageDialog(null, "Under Restricted Age");
+                        return;
+                    } else {
+                        pre.setString(12, lbage.getText());
+
+                    }
+                    pre.execute();
+                    JOptionPane.showMessageDialog(null, "Congratulations! New account created successfully.");
+
+                    if (id == -1) {
+                        Login mj = new Login();
+                        mj.setVisible(true);
+                    }
+                    this.dispose();
+                } else {
+                    String sql = "UPDATE tablelms SET"
+                            + " username = ?,"
+                            + " password = ?,"
+                            + " firstname = ?,"
+                            + " lastname = ?,"
+                            + " mid = ?,"
+                            + " gender = ?,"
+                            + " address = ?,"
+                            + " contact = ?,"
+                            + " email = ?,"
+                            + " usertype = ?,"
+                            + " bday = ?,"
+                            + " age = ?"
+                            + " WHERE UserID = ?";
                     
-                    pre.setString(12, lbage.getText());
-                    return;
+                    int updateConfirm = JOptionPane.showConfirmDialog(null, "Are sure to Change Account details?", "Update Account", JOptionPane.OK_CANCEL_OPTION);
+                    
+                    if(updateConfirm == 0){
+                        pre = connect.prepareStatement(sql);
+                    pre.setString(1, txtusername.getText());
+
+                    if (pswdreg.getText().equals(pswdretype.getText())) {
+                        pre.setString(2, pswdreg.getText());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Password unmatched.");
+                        return;
+                    }
+                    pre.setString(3, txtfname.getText());
+                    pre.setString(4, txtlname.getText());
+                    pre.setString(5, txtmid.getText());
+                    pre.setString(6, (String) cbgender.getSelectedItem());
+                    pre.setString(7, txtaddress.getText());
+
+                    if (txtshow.getText().isEmpty()) {
+                        pre.setString(8, "+63" + txtnumber.getText());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Contact number must contain 10 Digits.");
+                        return;
+                    }
+
+                    pre.setString(9, txtemail.getText());
+                    pre.setString(10, (String) cbusertype.getSelectedItem());
+                    pre.setString(11, ((JTextField) jDatebday.getDateEditor().getUiComponent()).getText());
+
+                    if (Integer.parseInt(lbage.getText()) <= 10) {
+                        JOptionPane.showMessageDialog(null, "Under Restricted Age");
+                        return;
+                    } else {
+                        pre.setString(12, lbage.getText());
+
+                    }
+                    pre.setString(13, id + "");
+                    pre.execute();
+                    JOptionPane.showMessageDialog(null, "Account Updated Successfully.");
+
+                    if (id == -1) {
+                        Login mj = new Login();
+                        mj.setVisible(true);
+                    }
+                    this.dispose();
+                    }
+                    
                 }
-                
-                
-                pre.execute();
-                
-                JOptionPane.showMessageDialog(null, "Congratulations! New account created successfully.");
-            }catch (Exception b){
+            } catch (Exception b) {
                 b.printStackTrace();
             }
-    }                                            
+        }
     }//GEN-LAST:event_btnsubmitActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       new Login().setVisible(true);
+        if (id == -1) {
+            Login mj = new Login();
+            mj.setVisible(true);
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void btnsubmitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsubmitMouseEntered
-        btnsubmit.setBackground(java.awt.Color.blue);
+        btnsubmit.setBackground(java.awt.Color.BLUE);
     }//GEN-LAST:event_btnsubmitMouseEntered
 
     private void btnsubmitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsubmitMouseExited
@@ -532,7 +737,7 @@ public class Regform extends javax.swing.JFrame {
     }//GEN-LAST:event_btnsubmitMouseExited
 
     private void btnclearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnclearMouseEntered
-       btnclear.setBackground(java.awt.Color.red);
+        btnclear.setBackground(java.awt.Color.RED);
     }//GEN-LAST:event_btnclearMouseEntered
 
     private void btnclearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnclearMouseExited
@@ -540,7 +745,7 @@ public class Regform extends javax.swing.JFrame {
     }//GEN-LAST:event_btnclearMouseExited
 
     private void btnbackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbackMouseEntered
-        btnback.setBackground(java.awt.Color.green);
+        btnback.setBackground(java.awt.Color.GREEN);
     }//GEN-LAST:event_btnbackMouseEntered
 
     private void btnbackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnbackMouseExited
@@ -552,21 +757,21 @@ public class Regform extends javax.swing.JFrame {
     }//GEN-LAST:event_txtnumber1ActionPerformed
 
     private void jDatebdayPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDatebdayPropertyChange
-        String dateOfBirth = ((JTextField)jDatebday.getDateEditor().getUiComponent()).getText();
-        
-            if (!dateOfBirth.isEmpty()){
-                String dob[] = dateOfBirth.split("/");
-                int year = Integer.parseInt(dob[0]);
-                int month = Integer.parseInt(dob[1]);
-                int day = Integer.parseInt(dob[2]);
-        
-                LocalDate selectedDate = LocalDate.of(year, month, day);
-                LocalDate currentDate = LocalDate.now();
-        
-                int resultYear = Period.between(selectedDate, currentDate).getYears();
-                lbage.setText(resultYear + "");    
-            }
-        
+        String dateOfBirth = ((JTextField) jDatebday.getDateEditor().getUiComponent()).getText();
+
+        if (!dateOfBirth.isEmpty()) {
+            String dob[] = dateOfBirth.split("/");
+            int year = Integer.parseInt(dob[0]);
+            int month = Integer.parseInt(dob[1]);
+            int day = Integer.parseInt(dob[2]);
+
+            LocalDate selectedDate = LocalDate.of(year, month, day);
+            LocalDate currentDate = LocalDate.now();
+
+            int resultYear = Period.between(selectedDate, currentDate).getYears();
+            lbage.setText(resultYear + "");
+        }
+
     }//GEN-LAST:event_jDatebdayPropertyChange
 
     private void cbusertypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbusertypeActionPerformed
@@ -574,23 +779,101 @@ public class Regform extends javax.swing.JFrame {
     }//GEN-LAST:event_cbusertypeActionPerformed
 
     private void txtnumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnumberKeyTyped
-       char c = evt.getKeyChar();
-        if(!Character.isDigit(c)){
-        evt.consume();
-        return;
-        }
-        if(!txtnumber.getText().isEmpty()&&txtnumber.getText().length()==10){
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
             evt.consume();
+            return;
+        }
+        if (!txtnumber.getText().isEmpty()) {
+            if (txtnumber.getText().length() < 9) {
+                txtshow.setText("Must contain 10 digit number.");
+            } else {
+                txtshow.setText("");
+                if (txtnumber.getText().length() == 10) {
+                    evt.consume();
+                }
+            }
+        } else {
+            txtshow.setText("Must contain 10 digit number.");
         }
     }//GEN-LAST:event_txtnumberKeyTyped
 
     private void pswdregPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_pswdregPropertyChange
-       
+
     }//GEN-LAST:event_pswdregPropertyChange
 
     private void pswdretypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pswdretypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pswdretypeActionPerformed
+
+    private void btnclearFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnclearFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnclearFocusGained
+
+    private void txtmidKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmidKeyTyped
+        char c = evt.getKeyChar();
+        String field = txtmid.getText();
+        if (Character.isDigit(c)) {
+            evt.consume();
+        }
+        if (!field.isEmpty() && field.length() == 1) {
+            if (!(c == KeyEvent.VK_DELETE || c == KeyEvent.VK_BACK_SPACE)) {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_txtmidKeyTyped
+
+    private void txtnumberKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnumberKeyPressed
+
+    }//GEN-LAST:event_txtnumberKeyPressed
+
+    private void pswdregFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pswdregFocusLost
+        String pass = pswdreg.getText();
+        String confirm = pswdretype.getText();
+
+        if (!pass.equals(confirm)) {
+            txtshowpas.setText("Passwords do not match");
+        } else {
+            txtshowpas.setText("");
+        }
+    }//GEN-LAST:event_pswdregFocusLost
+
+    private void pswdretypeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pswdretypeFocusLost
+        String pass = pswdreg.getText();
+        String confirm = pswdretype.getText();
+
+        if (!pass.equals(confirm)) {
+            txtshowpas.setText("Passwords do not match");
+        } else {
+            txtshowpas.setText("");
+        }
+    }//GEN-LAST:event_pswdretypeFocusLost
+
+    private void pswdretypeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pswdretypeKeyTyped
+        char c = evt.getKeyChar();
+
+        String pass = pswdreg.getText();
+        String confirm = pswdretype.getText() + c;
+
+        if (!pass.equals(confirm)) {
+            txtshowpas.setText("Passwords do not match");
+        } else {
+            txtshowpas.setText("");
+        }
+    }//GEN-LAST:event_pswdretypeKeyTyped
+
+    private void pswdregKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pswdregKeyTyped
+        char c = evt.getKeyChar();
+
+        String pass = pswdreg.getText() + c;
+        String confirm = pswdretype.getText();
+
+        if (!pass.equals(confirm)) {
+            txtshowpas.setText("Passwords do not match");
+        } else {
+            txtshowpas.setText("");
+        }
+    }//GEN-LAST:event_pswdregKeyTyped
 
     /**
      * @param args the command line arguments
@@ -643,8 +926,6 @@ public class Regform extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -667,6 +948,8 @@ public class Regform extends javax.swing.JFrame {
     private javax.swing.JTextField txtmid;
     private javax.swing.JTextField txtnumber;
     private javax.swing.JTextField txtnumber1;
+    private javax.swing.JLabel txtshow;
+    private javax.swing.JLabel txtshowpas;
     private javax.swing.JTextField txtusername;
     // End of variables declaration//GEN-END:variables
 }

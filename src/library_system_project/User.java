@@ -27,76 +27,81 @@ public class User extends javax.swing.JFrame {
      */
     int id;
     String username;
-    
+
     public User() {
         initComponents();
+        icon();
+        setResizable(false);
     }
+
+    private void icon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("iconnn.jpg")));
+    }
+
     public User(String name, int id) {
         this.id = id;
         this.username = name;
         initComponents();
+        icon();
         usernameS(username);
         setLocationRelativeTo(null);
-        icon();
         hidePanels();
         showBooks();
         showTransactions();
-        
-        
     }
-    
-    private void showBooks(){
+
+    private void showBooks() {
         try {
             Connection connect = DbConnection.getConnection();
             String sql = "select * from `tblbooks`";
             Statement s = connect.createStatement();
             ResultSet rs = s.executeQuery(sql);
-            
+
             DefaultTableModel model = (DefaultTableModel) tableBooks.getModel();
             model.setRowCount(0);
-            for(int i = 0; rs.next(); i++){
+            for (int i = 0; rs.next(); i++) {
                 String row[] = new String[4];
                 row[0] = rs.getString("bookId");
                 row[1] = rs.getString("booktitle");
                 row[2] = rs.getString("bookauthor");
                 row[3] = rs.getString("status");
-                
+
                 model.addRow(row);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    private void showTransactions(){
+
+    private void showTransactions() {
         try {
             Connection connect = DbConnection.getConnection();
             String sql = "select tb.transactId, tb.dateborrowed, tb.datereturned, tb.status, tb.librarian,"
-                    + " tb.bookId, tb2.booktitle from tbltransact tb INNER JOIN tblbooks tb2 ON tb.bookId = tb2.bookId WHERE tb.userid = " + id;
+                    + " tb.bookId, tb2.booktitle from tbltransact tb INNER JOIN tblbooks tb2 ON tb.bookId = tb2.bookId WHERE tb.userid = " + id + " AND NOT tb.status = 'Removed'";
             Statement s = connect.createStatement();
             ResultSet rs = s.executeQuery(sql);
-            
+
             DefaultTableModel model = (DefaultTableModel) tableborrowedpending.getModel();
             DefaultTableModel model2 = (DefaultTableModel) tableborrowed.getModel();
             model.setRowCount(0);
             model2.setRowCount(0);
-            String row[] = new String[4];
+            String row[] = new String[5];
             for (int i = 0; rs.next(); i++) {
-                if (rs.getString("status").equals("Returned")) {
+                if (rs.getString("status").equals("Returned") || rs.getString("status").equals("Disapproved")) {
                     row[0] = rs.getString("transactId");
                     row[1] = rs.getString("booktitle");
                     row[2] = rs.getString("datereturned");
-                    row[3] = rs.getString("librarian");
-                    
+                    row[3] = rs.getString("status");
+                    row[4] = rs.getString("librarian");
+
                     model2.addRow(row);
-                }else{
-                    row = new String[5];
+                } else {
                     row[0] = rs.getString("bookId");
                     row[1] = rs.getString("booktitle");
                     row[2] = rs.getString("status");
                     row[3] = rs.getString("dateborrowed");
                     row[4] = rs.getString("librarian");
-                    
+
                     model.addRow(row);
                 }
             }
@@ -104,19 +109,33 @@ public class User extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    void usernameS(String username){
+
+    void usernameS(String username) {
         lbluserS.setText(username);
     }
-    
-    private void hidePanels(){
+
+    private void hidePanels() {
         BorrowedHistory.setVisible(false);
         PendingBorrowed.setVisible(false);
         ListofBooks.setVisible(false);
     }
-     private void icon(){
-    setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("244650586_432577631535911_8014217671605978899_n.png")));
+
+    private void showSelectedButton() {
+        btnlist.setBackground(java.awt.Color.white);
+        btnpending.setBackground(java.awt.Color.white);
+        btnhistory.setBackground(java.awt.Color.white);
+
+        if (BorrowedHistory.isVisible()) {
+            btnhistory.setBackground(java.awt.Color.yellow);
+        }
+        if (PendingBorrowed.isVisible()) {
+            btnpending.setBackground(java.awt.Color.yellow);
+        }
+        if (ListofBooks.isVisible()) {
+            btnlist.setBackground(java.awt.Color.yellow);
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -128,38 +147,33 @@ public class User extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         ListofBooks = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        btnaddborrow = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableBooks = new javax.swing.JTable();
         btnsearch = new javax.swing.JButton();
         txtsearch = new javax.swing.JTextField();
-        btnaddborrow = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         PendingBorrowed = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableborrowedpending = new javax.swing.JTable();
         btnsave = new javax.swing.JButton();
         btnremove = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         BorrowedHistory = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableborrowed = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
         btnlogout = new javax.swing.JButton();
         btnhistory = new javax.swing.JButton();
         btnpending = new javax.swing.JButton();
         btnlist = new javax.swing.JButton();
         lbluserS = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Library Management System/user_menu/");
+        setResizable(false);
+        setSize(new java.awt.Dimension(0, 0));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -167,21 +181,33 @@ public class User extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(50, 157, 156));
+        jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ListofBooks.setBackground(new java.awt.Color(141, 193, 207));
+        ListofBooks.setOpaque(false);
         ListofBooks.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel9.setBackground(new java.awt.Color(7, 115, 149));
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("List Of Books");
-        jLabel9.setOpaque(true);
-        ListofBooks.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, -1));
+        btnaddborrow.setBackground(new java.awt.Color(255, 255, 255));
+        btnaddborrow.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        btnaddborrow.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\addto.png")); // NOI18N
+        btnaddborrow.setBorder(null);
+        btnaddborrow.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnaddborrowMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnaddborrowMouseExited(evt);
+            }
+        });
+        btnaddborrow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddborrowActionPerformed(evt);
+            }
+        });
+        ListofBooks.add(btnaddborrow, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 470, 192, 32));
 
-        tableBooks.setBackground(new java.awt.Color(141, 193, 207));
-        tableBooks.setFont(new java.awt.Font("Ink Free", 1, 12)); // NOI18N
+        tableBooks.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableBooks.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -198,14 +224,17 @@ public class User extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableBooks.setSelectionBackground(new java.awt.Color(0, 102, 102));
+        tableBooks.setSelectionForeground(new java.awt.Color(255, 255, 254));
         jScrollPane1.setViewportView(tableBooks);
 
-        ListofBooks.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 480, 480));
+        ListofBooks.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 370));
 
         btnsearch.setBackground(new java.awt.Color(255, 255, 255));
         btnsearch.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
-        btnsearch.setText("Search");
-        btnsearch.setBorder(null);
+        btnsearch.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\searchhh.png")); // NOI18N
+        btnsearch.setToolTipText("Seach books");
+        btnsearch.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
         btnsearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnsearchMouseEntered(evt);
@@ -224,45 +253,23 @@ public class User extends javax.swing.JFrame {
                 btnsearchKeyReleased(evt);
             }
         });
-        ListofBooks.add(btnsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 70, 20));
+        ListofBooks.add(btnsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, 20, 20));
 
-        txtsearch.setFont(new java.awt.Font("Ink Free", 1, 12)); // NOI18N
-        ListofBooks.add(txtsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 360, -1));
+        txtsearch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtsearch.setBorder(null);
+        ListofBooks.add(txtsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 200, 20));
 
-        btnaddborrow.setBackground(new java.awt.Color(255, 255, 255));
-        btnaddborrow.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
-        btnaddborrow.setText("Add to Borrow List");
-        btnaddborrow.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(7, 115, 149), 3, true));
-        btnaddborrow.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnaddborrowMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnaddborrowMouseExited(evt);
-            }
-        });
-        btnaddborrow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnaddborrowActionPerformed(evt);
-            }
-        });
-        ListofBooks.add(btnaddborrow, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 560, 190, 20));
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\listof.png")); // NOI18N
+        jLabel3.setText("jLabel3");
+        ListofBooks.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
 
-        jPanel1.add(ListofBooks, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 480, 590));
+        jPanel1.add(ListofBooks, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
 
         PendingBorrowed.setBackground(new java.awt.Color(141, 193, 207));
+        PendingBorrowed.setOpaque(false);
         PendingBorrowed.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel10.setBackground(new java.awt.Color(7, 115, 149));
-        jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Pending/Borrowed Books");
-        jLabel10.setOpaque(true);
-        PendingBorrowed.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 40));
-
-        tableborrowedpending.setBackground(new java.awt.Color(141, 193, 207));
-        tableborrowedpending.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        tableborrowedpending.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableborrowedpending.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -279,13 +286,15 @@ public class User extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableborrowedpending.setSelectionBackground(new java.awt.Color(0, 102, 102));
+        tableborrowedpending.setSelectionForeground(new java.awt.Color(255, 255, 254));
         jScrollPane2.setViewportView(tableborrowedpending);
 
-        PendingBorrowed.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 480, 500));
+        PendingBorrowed.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 370));
 
         btnsave.setBackground(new java.awt.Color(255, 255, 255));
         btnsave.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnsave.setText("Save");
+        btnsave.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\save.png")); // NOI18N
         btnsave.setBorder(null);
         btnsave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -300,11 +309,11 @@ public class User extends javax.swing.JFrame {
                 btnsaveActionPerformed(evt);
             }
         });
-        PendingBorrowed.add(btnsave, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 550, 90, 30));
+        PendingBorrowed.add(btnsave, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, 92, 32));
 
         btnremove.setBackground(new java.awt.Color(255, 255, 255));
         btnremove.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnremove.setText("Remove");
+        btnremove.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\remove.png")); // NOI18N
         btnremove.setBorder(null);
         btnremove.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -319,48 +328,50 @@ public class User extends javax.swing.JFrame {
                 btnremoveActionPerformed(evt);
             }
         });
-        PendingBorrowed.add(btnremove, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 550, 90, 30));
+        PendingBorrowed.add(btnremove, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 470, 92, 32));
 
-        jPanel1.add(PendingBorrowed, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 480, 590));
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\pendingb.png")); // NOI18N
+        jLabel4.setText("jLabel4");
+        PendingBorrowed.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
+
+        jPanel1.add(PendingBorrowed, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
 
         BorrowedHistory.setBackground(new java.awt.Color(141, 193, 207));
+        BorrowedHistory.setOpaque(false);
         BorrowedHistory.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel11.setBackground(new java.awt.Color(7, 115, 149));
-        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Borrowed History");
-        jLabel11.setOpaque(true);
-        BorrowedHistory.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 40));
-
-        tableborrowed.setBackground(new java.awt.Color(141, 193, 207));
-        tableborrowed.setFont(new java.awt.Font("Ink Free", 0, 14)); // NOI18N
+        tableborrowed.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableborrowed.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "  Transaction ID", "         Title ", " Date Returned", "        Librarian "
+                "  Transaction ID", "         Title ", " Date Returned", "   Status", "        Librarian "
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tableborrowed.setSelectionBackground(new java.awt.Color(0, 102, 102));
+        tableborrowed.setSelectionForeground(new java.awt.Color(255, 255, 254));
         jScrollPane3.setViewportView(tableborrowed);
 
-        BorrowedHistory.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 40, 480, 550));
+        BorrowedHistory.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 430));
 
-        jPanel1.add(BorrowedHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 480, 590));
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\bhistory.png")); // NOI18N
+        jLabel5.setText("jLabel5");
+        BorrowedHistory.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
+
+        jPanel1.add(BorrowedHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
 
         btnlogout.setBackground(new java.awt.Color(255, 255, 255));
         btnlogout.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnlogout.setText("Logout");
+        btnlogout.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\logouts.png")); // NOI18N
         btnlogout.setBorder(null);
         btnlogout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -375,12 +386,12 @@ public class User extends javax.swing.JFrame {
                 btnlogoutActionPerformed(evt);
             }
         });
-        jPanel1.add(btnlogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 570, 90, 30));
+        jPanel1.add(btnlogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 430, 134, 144));
 
         btnhistory.setBackground(new java.awt.Color(255, 255, 255));
         btnhistory.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnhistory.setText("Borrowed History");
-        btnhistory.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(7, 115, 149), 3, true));
+        btnhistory.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\historys.png")); // NOI18N
+        btnhistory.setBorder(null);
         btnhistory.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnhistoryMouseEntered(evt);
@@ -394,12 +405,12 @@ public class User extends javax.swing.JFrame {
                 btnhistoryActionPerformed(evt);
             }
         });
-        jPanel1.add(btnhistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 510, 340, 30));
+        jPanel1.add(btnhistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 430, 134, 144));
 
         btnpending.setBackground(new java.awt.Color(255, 255, 255));
         btnpending.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnpending.setText("Pending/Borrowed Books");
-        btnpending.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(7, 115, 149), 3, true));
+        btnpending.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\pends.png")); // NOI18N
+        btnpending.setBorder(null);
         btnpending.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnpendingMouseEntered(evt);
@@ -413,12 +424,12 @@ public class User extends javax.swing.JFrame {
                 btnpendingActionPerformed(evt);
             }
         });
-        jPanel1.add(btnpending, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 440, 340, 30));
+        jPanel1.add(btnpending, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 270, 134, 144));
 
         btnlist.setBackground(new java.awt.Color(255, 255, 255));
         btnlist.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnlist.setText("List of Books");
-        btnlist.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(7, 115, 149), 3, true));
+        btnlist.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\lists.png")); // NOI18N
+        btnlist.setBorder(null);
         btnlist.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnlistMouseEntered(evt);
@@ -432,88 +443,59 @@ public class User extends javax.swing.JFrame {
                 btnlistActionPerformed(evt);
             }
         });
-        jPanel1.add(btnlist, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 370, 340, 30));
+        jPanel1.add(btnlist, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 270, 134, 144));
 
         lbluserS.setBackground(new java.awt.Color(7, 115, 149));
         lbluserS.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
         lbluserS.setForeground(new java.awt.Color(255, 255, 255));
         lbluserS.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbluserS.setOpaque(true);
-        jPanel1.add(lbluserS, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 280, 320, 30));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Downloads\\244321751_427596305376778_6719107591455322172_n.png")); // NOI18N
-        jLabel4.setText("jLabel4");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 40, -1, -1));
-
-        jLabel3.setBackground(new java.awt.Color(7, 115, 149));
-        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Welcome Student!");
-        jLabel3.setOpaque(true);
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 380, 50));
+        jPanel1.add(lbluserS, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 210, 200, 40));
 
         jLabel1.setBackground(new java.awt.Color(141, 193, 207));
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\user.png")); // NOI18N
         jLabel1.setOpaque(true);
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 380, 590));
-
-        jLabel7.setFont(new java.awt.Font("Segoe Script", 1, 20)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Library Management System");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 310, 30));
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Cavite State University - Naic");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 310, 20));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Downloads\\244428021_1294881700962687_7319293364175280459_n.png")); // NOI18N
-        jLabel8.setText("jLabel8");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, -1, -1));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Downloads\\244467596_285374813451858_4973129835230929871_n.png")); // NOI18N
-        jLabel5.setText("jLabel5");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
-
-        jLabel2.setBackground(new java.awt.Color(141, 193, 207));
-        jLabel2.setOpaque(true);
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 480, 590));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 630));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        setSize(new java.awt.Dimension(941, 672));
+        setSize(new java.awt.Dimension(998, 667));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        int logout = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?","Logout",JOptionPane.OK_CANCEL_OPTION);
-        
-        if(logout==0){
-        new Login().setVisible(true);
-        dispose();
+        int logout = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Logout", JOptionPane.OK_CANCEL_OPTION);
+
+        if (logout == 0) {
+            new Login().setVisible(true);
+            dispose();
         }
-        
-        
+
+
     }//GEN-LAST:event_formWindowClosing
 
     private void btnpendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpendingActionPerformed
         hidePanels();
         PendingBorrowed.setVisible(true);
+        showSelectedButton();
     }//GEN-LAST:event_btnpendingActionPerformed
 
     private void btnhistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhistoryActionPerformed
         hidePanels();
-         BorrowedHistory.setVisible(true);
+        BorrowedHistory.setVisible(true);
+        showSelectedButton();
     }//GEN-LAST:event_btnhistoryActionPerformed
 
     private void btnlistMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnlistMouseEntered
@@ -522,6 +504,7 @@ public class User extends javax.swing.JFrame {
 
     private void btnlistMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnlistMouseExited
         btnlist.setBackground(java.awt.Color.white);
+        showSelectedButton();
     }//GEN-LAST:event_btnlistMouseExited
 
     private void btnpendingMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpendingMouseEntered
@@ -530,6 +513,7 @@ public class User extends javax.swing.JFrame {
 
     private void btnpendingMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpendingMouseExited
         btnpending.setBackground(java.awt.Color.white);
+        showSelectedButton();
     }//GEN-LAST:event_btnpendingMouseExited
 
     private void btnhistoryMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnhistoryMouseEntered
@@ -538,6 +522,7 @@ public class User extends javax.swing.JFrame {
 
     private void btnhistoryMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnhistoryMouseExited
         btnhistory.setBackground(java.awt.Color.white);
+        showSelectedButton();
     }//GEN-LAST:event_btnhistoryMouseExited
 
     private void btnlogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnlogoutMouseEntered
@@ -545,94 +530,135 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_btnlogoutMouseEntered
 
     private void btnlogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnlogoutMouseExited
-       btnlogout.setBackground(java.awt.Color.white);
+        btnlogout.setBackground(java.awt.Color.white);
     }//GEN-LAST:event_btnlogoutMouseExited
 
     private void btnlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlogoutActionPerformed
-        int logout = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?","Logout",JOptionPane.OK_CANCEL_OPTION);
-        
-        if(logout==0){
-        new Login().setVisible(true);
-        dispose();}
+        int logout = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Logout", JOptionPane.OK_CANCEL_OPTION);
+
+        if (logout == 0) {
+            new Login().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_btnlogoutActionPerformed
 
-    private void btnsearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsearchMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnsearchMouseEntered
-
-    private void btnsearchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsearchMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnsearchMouseExited
-
-    private void btnsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsearchActionPerformed
-        String regex = txtsearch.getText();
-        filterTable(regex);
-    }//GEN-LAST:event_btnsearchActionPerformed
-
-    private void btnaddborrowMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddborrowMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnaddborrowMouseEntered
-
-    private void btnaddborrowMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddborrowMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnaddborrowMouseExited
+    private void btnlistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlistActionPerformed
+        hidePanels();
+        ListofBooks.setVisible(true);
+        showSelectedButton();
+    }//GEN-LAST:event_btnlistActionPerformed
 
     private void btnaddborrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddborrowActionPerformed
         int rows = tableBooks.getSelectedRowCount();
-        if(rows != 1){
+        if (rows != 1) {
             JOptionPane.showMessageDialog(null, "Please Select a single book", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        } else {
             int row = tableBooks.getSelectedRow();
-            
+
             String bookId = tableBooks.getValueAt(row, 0).toString();
             String bookTitle = tableBooks.getValueAt(row, 1).toString();
             String status = tableBooks.getValueAt(row, 3).toString();
-            
-            if(status.equals("Borrowed")){
+
+            if (status.equals("Borrowed")) {
                 JOptionPane.showMessageDialog(null, "Book " + bookTitle + " is Borrowed.", "Error", JOptionPane.ERROR_MESSAGE);
-            }else{
+            } else {
+                boolean found = false;
+                for (int i = 0; i < tableborrowedpending.getRowCount(); i++) {
+                    if (tableborrowedpending.getValueAt(i, 0).toString().equals(bookId)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    JOptionPane.showMessageDialog(null, bookTitle + " is already pending", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 String borrow[] = new String[5];
                 borrow[0] = bookId;
                 borrow[1] = bookTitle;
                 borrow[2] = "Pending";
                 borrow[3] = "--";
                 borrow[4] = "--";
-                
+
                 DefaultTableModel model = (DefaultTableModel) tableborrowedpending.getModel();
                 model.addRow(borrow);
                 JOptionPane.showMessageDialog(null, "Book " + bookTitle + " is added for request.");
             }
-            
-//            try {
-//                Connection connect = DbConnection.getConnection();
-//                String sql = "INSERT INTO tbltransact (userid, bookid, dateborrowed, datereturned, status, librarian) "
-//                        + "VALUES(" + id + ", " + bookId + ", '--', '--', 'Pending', '--')";
-//                PreparedStatement pst = connect.prepareStatement(sql);
-//                pst.execute();
-//                showTransactions();
-//                
-//                JOptionPane.showMessageDialog(null, "Book " + bookTitle + " has been requested.", "Success", JOptionPane.PLAIN_MESSAGE);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+
         }
     }//GEN-LAST:event_btnaddborrowActionPerformed
 
-    private void btnsaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsaveMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnsaveMouseEntered
+    private void btnaddborrowMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddborrowMouseExited
+        btnaddborrow.setBackground(java.awt.Color.white);
+    }//GEN-LAST:event_btnaddborrowMouseExited
 
-    private void btnsaveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsaveMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnsaveMouseExited
+    private void btnaddborrowMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddborrowMouseEntered
+        btnaddborrow.setBackground(java.awt.Color.blue);
+    }//GEN-LAST:event_btnaddborrowMouseEntered
+
+    private void btnsearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnsearchKeyReleased
+
+    }//GEN-LAST:event_btnsearchKeyReleased
+
+    private void btnsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsearchActionPerformed
+        String regex = txtsearch.getText();
+        filterTable(regex);
+    }//GEN-LAST:event_btnsearchActionPerformed
+
+    private void btnsearchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsearchMouseExited
+        btnsearch.setBackground(java.awt.Color.white);
+    }//GEN-LAST:event_btnsearchMouseExited
+
+    private void btnsearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsearchMouseEntered
+        btnsearch.setBackground(java.awt.Color.blue);
+    }//GEN-LAST:event_btnsearchMouseEntered
+
+    private void btnremoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnremoveActionPerformed
+        int rows = tableborrowedpending.getSelectedRowCount();
+        if (rows != 1) {
+            JOptionPane.showMessageDialog(null, "Please Select a single book", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int row = tableborrowedpending.getSelectedRow();
+
+            String transactionId = tableborrowedpending.getValueAt(row, 0).toString();
+            String bookTitle = tableborrowedpending.getValueAt(row, 1).toString();
+            String status = tableborrowedpending.getValueAt(row, 2).toString();
+
+            try {
+                String sql = "Update tbltransact set status = 'Removed'"
+                        + " WHERE userId = " + id + " AND status = 'Requested' AND bookId = " + transactionId;
+                if (status.equals("Borrowed")) {
+                    JOptionPane.showMessageDialog(null, "Book " + bookTitle + " cannot be removed.", "failed", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    Connection connect = DbConnection.getConnection();
+                    PreparedStatement pst = connect.prepareStatement(sql);
+                    pst.executeUpdate();
+                    DefaultTableModel model = (DefaultTableModel) tableborrowedpending.getModel();
+
+                    model.removeRow(row);
+                    JOptionPane.showMessageDialog(null, "Book " + bookTitle + " has been removed.", "Success", JOptionPane.PLAIN_MESSAGE);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnremoveActionPerformed
+
+    private void btnremoveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnremoveMouseExited
+        btnremove.setBackground(java.awt.Color.white);
+    }//GEN-LAST:event_btnremoveMouseExited
+
+    private void btnremoveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnremoveMouseEntered
+        btnremove.setBackground(java.awt.Color.red);
+    }//GEN-LAST:event_btnremoveMouseEntered
 
     private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
         int rows = tableborrowedpending.getSelectedRowCount();
-        if(rows != 1){
+        if (rows != 1) {
             JOptionPane.showMessageDialog(null, "Please Select a single book", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        } else {
             int row = tableborrowedpending.getSelectedRow();
 
             String bookId = tableborrowedpending.getValueAt(row, 0).toString();
@@ -643,16 +669,18 @@ public class User extends javax.swing.JFrame {
                 Connection connect = DbConnection.getConnection();
 
                 if (status.equals("Pending")) {
-                    
-                String sql = "INSERT INTO tbltransact (userid, bookid, dateborrowed, datereturned, status, librarian) "
-                        + "VALUES(" + id + ", " + bookId + ", '--', '--', 'Requested', '--')";
-                PreparedStatement pst = connect.prepareStatement(sql);
-                pst.execute();
-                showTransactions();
-                
-                JOptionPane.showMessageDialog(null, "Book " + bookTitle + " has been requested.", "Success", JOptionPane.PLAIN_MESSAGE);
-            
-                    showTransactions();
+
+                    String sql = "INSERT INTO tbltransact (userid, bookid, dateborrowed, datereturned, status, librarian) "
+                            + "VALUES(" + id + ", " + bookId + ", '--', '--', 'Requested', '--')";
+                    PreparedStatement pst = connect.prepareStatement(sql);
+                    pst.execute();
+
+                    JOptionPane.showMessageDialog(null, "Book " + bookTitle + " has been requested.", "Success", JOptionPane.PLAIN_MESSAGE);
+
+                    String value = "Requested";
+                    tableborrowedpending.setValueAt(value, row, 2);
+                } else if (status.equals("Borrowed")) {
+                    JOptionPane.showMessageDialog(null, "The book you selected is Borrowed already.", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "The book you selected is Pending.", "Error", JOptionPane.ERROR_MESSAGE);
 
@@ -663,60 +691,40 @@ public class User extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnsaveActionPerformed
 
-    private void btnremoveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnremoveMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnremoveMouseEntered
+    private void btnsaveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsaveMouseExited
+        btnsave.setBackground(java.awt.Color.white);
+    }//GEN-LAST:event_btnsaveMouseExited
 
-    private void btnremoveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnremoveMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnremoveMouseExited
+    private void btnsaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnsaveMouseEntered
+        btnsave.setBackground(java.awt.Color.blue);
+    }//GEN-LAST:event_btnsaveMouseEntered
 
-    private void btnremoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnremoveActionPerformed
-        int rows = tableborrowedpending.getSelectedRowCount();
-        if(rows != 1){
-            JOptionPane.showMessageDialog(null, "Please Select a single book", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
-            int row = tableborrowedpending.getSelectedRow();
+    private void filterTable(String regex) {
+        String sql = "SELECT * from tblbooks WHERE"
+                + " booktitle LIKE '%" + regex + "%' OR bookauthor LIKE '%" + regex + "%' OR"
+                + " publisher LIKE '%" + regex + "%' OR pubdate LIKE '%" + regex + "%' OR status LIKE '%" + regex + "%'";
 
-            String transactionId = tableborrowedpending.getValueAt(row, 0).toString();
-            String bookTitle = tableborrowedpending.getValueAt(row, 1).toString();
-            String status = tableborrowedpending.getValueAt(row, 2).toString();
-            
-            if (status.equals("Pending")) {
-                    DefaultTableModel model = (DefaultTableModel) tableborrowedpending.getModel();
-                    
-                    model.removeRow(row);
-                    JOptionPane.showMessageDialog(null, "Book " + bookTitle + " has been removed.", "Success", JOptionPane.PLAIN_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "The book you selected has been  " + status + " already.", "Error", JOptionPane.ERROR_MESSAGE);
-
-                }
-            try {
-                Connection connect = DbConnection.getConnection();
-
-                
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }//GEN-LAST:event_btnremoveActionPerformed
-
-    private void btnlistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlistActionPerformed
-        hidePanels();
-        ListofBooks.setVisible(true);
-    }//GEN-LAST:event_btnlistActionPerformed
-
-    private void btnsearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnsearchKeyReleased
-        
-    }//GEN-LAST:event_btnsearchKeyReleased
-
-    private void filterTable(String regex){
         DefaultTableModel model = (DefaultTableModel) tableBooks.getModel();
-        TableRowSorter <DefaultTableModel> tr = new TableRowSorter <DefaultTableModel> (model);
-        tableBooks.setRowSorter(tr);
-        tr.setRowFilter(RowFilter.regexFilter(regex));
+        model.setRowCount(0);
+        try {
+            Connection connect = DbConnection.getConnection();
+            Statement s = connect.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+
+            while (rs.next()) {
+                String id = rs.getString("bookId");
+                String title = rs.getString("booktitle");
+                String author = rs.getString("bookauthor");
+                String status = rs.getString("status");
+
+                String row[] = {id, title, author, status};
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -765,16 +773,9 @@ public class User extends javax.swing.JFrame {
     private javax.swing.JButton btnsave;
     private javax.swing.JButton btnsearch;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
