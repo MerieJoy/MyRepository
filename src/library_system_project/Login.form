@@ -135,7 +135,7 @@
               <Font name="Ink Free" size="18" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\login.png"/>
+              <Image iconType="3" name="/LMS Icon/login.png"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
@@ -162,7 +162,7 @@
               <Font name="Ink Free" size="18" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\clear.png"/>
+              <Image iconType="3" name="/LMS Icon/clear.png"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
@@ -182,7 +182,7 @@
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\userpass.png"/>
+              <Image iconType="3" name="/LMS Icon/userpass.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="jLabel4"/>
           </Properties>
@@ -195,7 +195,7 @@
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\userlogin.png"/>
+              <Image iconType="3" name="/LMS Icon/userlogin.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="jLabel4"/>
           </Properties>
@@ -208,7 +208,7 @@
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\bglogin.png"/>
+              <Image iconType="3" name="/LMS Icon/bglogin.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="jLabel3"/>
           </Properties>

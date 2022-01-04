@@ -153,16 +153,16 @@ public class User extends javax.swing.JFrame {
         btnsearch = new javax.swing.JButton();
         txtsearch = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        BorrowedHistory = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableborrowed = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
         PendingBorrowed = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableborrowedpending = new javax.swing.JTable();
         btnsave = new javax.swing.JButton();
         btnremove = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        BorrowedHistory = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tableborrowed = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
         btnlogout = new javax.swing.JButton();
         btnhistory = new javax.swing.JButton();
         btnpending = new javax.swing.JButton();
@@ -190,7 +190,7 @@ public class User extends javax.swing.JFrame {
 
         btnaddborrow.setBackground(new java.awt.Color(255, 255, 255));
         btnaddborrow.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
-        btnaddborrow.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\addto.png")); // NOI18N
+        btnaddborrow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/addto.png"))); // NOI18N
         btnaddborrow.setBorder(null);
         btnaddborrow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -232,7 +232,7 @@ public class User extends javax.swing.JFrame {
 
         btnsearch.setBackground(new java.awt.Color(255, 255, 255));
         btnsearch.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
-        btnsearch.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\searchhh.png")); // NOI18N
+        btnsearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/searchhh.png"))); // NOI18N
         btnsearch.setToolTipText("Seach books");
         btnsearch.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
         btnsearch.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -259,11 +259,44 @@ public class User extends javax.swing.JFrame {
         txtsearch.setBorder(null);
         ListofBooks.add(txtsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 200, 20));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\listof.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/listof.png"))); // NOI18N
         jLabel3.setText("jLabel3");
         ListofBooks.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
 
         jPanel1.add(ListofBooks, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
+
+        BorrowedHistory.setBackground(new java.awt.Color(141, 193, 207));
+        BorrowedHistory.setOpaque(false);
+        BorrowedHistory.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tableborrowed.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tableborrowed.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "  Transaction ID", "         Title ", " Date Returned", "   Status", "        Librarian "
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableborrowed.setSelectionBackground(new java.awt.Color(0, 102, 102));
+        tableborrowed.setSelectionForeground(new java.awt.Color(255, 255, 254));
+        jScrollPane3.setViewportView(tableborrowed);
+
+        BorrowedHistory.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 430));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/bhistory.png"))); // NOI18N
+        jLabel5.setText("jLabel5");
+        BorrowedHistory.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
+
+        jPanel1.add(BorrowedHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
 
         PendingBorrowed.setBackground(new java.awt.Color(141, 193, 207));
         PendingBorrowed.setOpaque(false);
@@ -294,7 +327,7 @@ public class User extends javax.swing.JFrame {
 
         btnsave.setBackground(new java.awt.Color(255, 255, 255));
         btnsave.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnsave.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\save.png")); // NOI18N
+        btnsave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/save.png"))); // NOI18N
         btnsave.setBorder(null);
         btnsave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -313,7 +346,7 @@ public class User extends javax.swing.JFrame {
 
         btnremove.setBackground(new java.awt.Color(255, 255, 255));
         btnremove.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnremove.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\remove.png")); // NOI18N
+        btnremove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/remove.png"))); // NOI18N
         btnremove.setBorder(null);
         btnremove.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -330,48 +363,15 @@ public class User extends javax.swing.JFrame {
         });
         PendingBorrowed.add(btnremove, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 470, 92, 32));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\pendingb.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/pendingb.png"))); // NOI18N
         jLabel4.setText("jLabel4");
         PendingBorrowed.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
 
         jPanel1.add(PendingBorrowed, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
 
-        BorrowedHistory.setBackground(new java.awt.Color(141, 193, 207));
-        BorrowedHistory.setOpaque(false);
-        BorrowedHistory.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tableborrowed.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tableborrowed.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "  Transaction ID", "         Title ", " Date Returned", "   Status", "        Librarian "
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tableborrowed.setSelectionBackground(new java.awt.Color(0, 102, 102));
-        tableborrowed.setSelectionForeground(new java.awt.Color(255, 255, 254));
-        jScrollPane3.setViewportView(tableborrowed);
-
-        BorrowedHistory.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 430));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\bhistory.png")); // NOI18N
-        jLabel5.setText("jLabel5");
-        BorrowedHistory.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
-
-        jPanel1.add(BorrowedHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
-
         btnlogout.setBackground(new java.awt.Color(255, 255, 255));
         btnlogout.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnlogout.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\logouts.png")); // NOI18N
+        btnlogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/logouts.png"))); // NOI18N
         btnlogout.setBorder(null);
         btnlogout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -390,7 +390,7 @@ public class User extends javax.swing.JFrame {
 
         btnhistory.setBackground(new java.awt.Color(255, 255, 255));
         btnhistory.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnhistory.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\historys.png")); // NOI18N
+        btnhistory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/historys.png"))); // NOI18N
         btnhistory.setBorder(null);
         btnhistory.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -409,7 +409,7 @@ public class User extends javax.swing.JFrame {
 
         btnpending.setBackground(new java.awt.Color(255, 255, 255));
         btnpending.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnpending.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\pends.png")); // NOI18N
+        btnpending.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/pends.png"))); // NOI18N
         btnpending.setBorder(null);
         btnpending.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -428,7 +428,7 @@ public class User extends javax.swing.JFrame {
 
         btnlist.setBackground(new java.awt.Color(255, 255, 255));
         btnlist.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnlist.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\lists.png")); // NOI18N
+        btnlist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/lists.png"))); // NOI18N
         btnlist.setBorder(null);
         btnlist.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -452,7 +452,7 @@ public class User extends javax.swing.JFrame {
         jPanel1.add(lbluserS, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 210, 200, 40));
 
         jLabel1.setBackground(new java.awt.Color(141, 193, 207));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\user.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/user.png"))); // NOI18N
         jLabel1.setOpaque(true);
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 630));
 
@@ -460,18 +460,14 @@ public class User extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        setSize(new java.awt.Dimension(998, 667));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

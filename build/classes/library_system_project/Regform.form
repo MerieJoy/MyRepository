@@ -61,7 +61,7 @@
               <Font name="Ink Free" size="18" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\rback.png"/>
+              <Image iconType="3" name="/LMS Icon/rback.png"/>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -85,7 +85,7 @@
               <Font name="Ink Free" size="18" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\submit.png"/>
+              <Image iconType="3" name="/LMS Icon/submit.png"/>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -109,7 +109,7 @@
               <Font name="Ink Free" size="18" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\rclear.png"/>
+              <Image iconType="3" name="/LMS Icon/rclear.png"/>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -789,7 +789,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\userpass.png"/>
+              <Image iconType="3" name="/LMS Icon/userpass.png"/>
             </Property>
           </Properties>
           <Constraints>
@@ -808,7 +808,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\userpass.png"/>
+              <Image iconType="3" name="/LMS Icon/userpass.png"/>
             </Property>
           </Properties>
           <Constraints>
@@ -827,7 +827,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\userlogin.png"/>
+              <Image iconType="3" name="/LMS Icon/userlogin.png"/>
             </Property>
           </Properties>
           <Constraints>
@@ -842,7 +842,7 @@
               <Color blue="d2" green="f4" red="cf" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\win10dell\Desktop\LMS Icon\reg.png"/>
+              <Image iconType="3" name="/LMS Icon/reg.png"/>
             </Property>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>

@@ -146,7 +146,7 @@ public class Regform extends javax.swing.JFrame {
 
         btnback.setBackground(new java.awt.Color(255, 255, 255));
         btnback.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\rback.png")); // NOI18N
+        btnback.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/rback.png"))); // NOI18N
         btnback.setOpaque(false);
         btnback.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -165,7 +165,7 @@ public class Regform extends javax.swing.JFrame {
 
         btnsubmit.setBackground(new java.awt.Color(255, 255, 255));
         btnsubmit.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnsubmit.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\submit.png")); // NOI18N
+        btnsubmit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/submit.png"))); // NOI18N
         btnsubmit.setOpaque(false);
         btnsubmit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -184,7 +184,7 @@ public class Regform extends javax.swing.JFrame {
 
         btnclear.setBackground(new java.awt.Color(255, 255, 255));
         btnclear.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnclear.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\rclear.png")); // NOI18N
+        btnclear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/rclear.png"))); // NOI18N
         btnclear.setOpaque(false);
         btnclear.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -477,23 +477,23 @@ public class Regform extends javax.swing.JFrame {
         jLabel17.setBackground(new java.awt.Color(16, 119, 124));
         jLabel17.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\userpass.png")); // NOI18N
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/userpass.png"))); // NOI18N
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 50, 40));
 
         jLabel4.setBackground(new java.awt.Color(16, 119, 124));
         jLabel4.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\userpass.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/userpass.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 50, 40));
 
         jLabel3.setBackground(new java.awt.Color(16, 119, 124));
         jLabel3.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\userlogin.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/userlogin.png"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 50, 40));
 
         jLabel1.setBackground(new java.awt.Color(207, 244, 210));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\reg.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/reg.png"))); // NOI18N
         jLabel1.setOpaque(true);
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, 510));
 

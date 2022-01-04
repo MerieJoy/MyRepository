@@ -111,7 +111,7 @@ public class Login extends javax.swing.JFrame {
 
         btnLogin.setBackground(new java.awt.Color(255, 255, 255));
         btnLogin.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnLogin.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\login.png")); // NOI18N
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/login.png"))); // NOI18N
         btnLogin.setBorder(null);
         btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -135,7 +135,7 @@ public class Login extends javax.swing.JFrame {
 
         btnclear.setBackground(new java.awt.Color(255, 255, 255));
         btnclear.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnclear.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\clear.png")); // NOI18N
+        btnclear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/clear.png"))); // NOI18N
         btnclear.setBorder(null);
         btnclear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -152,15 +152,15 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(btnclear, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 82, 32));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\userpass.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/userpass.png"))); // NOI18N
         jLabel5.setText("jLabel4");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 30, 30));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\userlogin.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/userlogin.png"))); // NOI18N
         jLabel4.setText("jLabel4");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 30, 30));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\bglogin.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/bglogin.png"))); // NOI18N
         jLabel3.setText("jLabel3");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 300));
 

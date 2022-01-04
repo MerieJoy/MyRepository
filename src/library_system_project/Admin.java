@@ -183,21 +183,12 @@ public class Admin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        listofusers = new javax.swing.JPanel();
-        txtsearchu = new javax.swing.JTextField();
-        btnseachu = new javax.swing.JButton();
-        btnupdateu = new javax.swing.JButton();
-        btnreg = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblusers = new javax.swing.JTable();
-        jLabel8 = new javax.swing.JLabel();
-        trans = new javax.swing.JPanel();
-        txtsearchtrans = new javax.swing.JTextField();
-        btnsearcht = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tbltrans = new javax.swing.JTable();
-        btnreturn = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
+        listofbooks = new javax.swing.JPanel();
+        txtsearchb = new javax.swing.JTextField();
+        btnsearch = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblbooks = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
         pendingreq = new javax.swing.JPanel();
         txtsearchp = new javax.swing.JTextField();
         btnsearchreq = new javax.swing.JButton();
@@ -206,12 +197,21 @@ public class Admin extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblreq = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
-        listofbooks = new javax.swing.JPanel();
-        txtsearchb = new javax.swing.JTextField();
-        btnsearch = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblbooks = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
+        trans = new javax.swing.JPanel();
+        txtsearchtrans = new javax.swing.JTextField();
+        btnsearcht = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tbltrans = new javax.swing.JTable();
+        btnreturn = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        listofusers = new javax.swing.JPanel();
+        txtsearchu = new javax.swing.JTextField();
+        btnseachu = new javax.swing.JButton();
+        btnupdateu = new javax.swing.JButton();
+        btnreg = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblusers = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
         btnlogout = new javax.swing.JButton();
         btnborrowed = new javax.swing.JButton();
         btnlistofbooks = new javax.swing.JButton();
@@ -238,7 +238,7 @@ public class Admin extends javax.swing.JFrame {
         regbooks.setOpaque(false);
         regbooks.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnclear.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\clearr.png")); // NOI18N
+        btnclear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/clearr.png"))); // NOI18N
         btnclear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnclearActionPerformed(evt);
@@ -246,7 +246,7 @@ public class Admin extends javax.swing.JFrame {
         });
         regbooks.add(btnclear, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 470, 92, 32));
 
-        btnupdate.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\update.png")); // NOI18N
+        btnupdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/update.png"))); // NOI18N
         btnupdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnupdateActionPerformed(evt);
@@ -254,7 +254,7 @@ public class Admin extends javax.swing.JFrame {
         });
         regbooks.add(btnupdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, 92, 32));
 
-        btnadd.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\add.png")); // NOI18N
+        btnadd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/add.png"))); // NOI18N
         btnadd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnaddActionPerformed(evt);
@@ -324,206 +324,11 @@ public class Admin extends javax.swing.JFrame {
         jLabel2.setOpaque(true);
         regbooks.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 120, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\regbooks.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/regbooks.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         regbooks.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
 
         jPanel1.add(regbooks, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
-
-        listofusers.setOpaque(false);
-        listofusers.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtsearchu.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        listofusers.add(txtsearchu, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 200, 20));
-
-        btnseachu.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\searchhh.png")); // NOI18N
-        btnseachu.setToolTipText("Search user");
-        btnseachu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnseachuMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnseachuMouseExited(evt);
-            }
-        });
-        btnseachu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnseachuActionPerformed(evt);
-            }
-        });
-        listofusers.add(btnseachu, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 20, 20));
-
-        btnupdateu.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\update.png")); // NOI18N
-        btnupdateu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnupdateuActionPerformed(evt);
-            }
-        });
-        listofusers.add(btnupdateu, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 470, 92, 32));
-
-        btnreg.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\registeru.png")); // NOI18N
-        btnreg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnregActionPerformed(evt);
-            }
-        });
-        listofusers.add(btnreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 470, 92, 32));
-
-        tblusers.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tblusers.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "    User ID", "    Name", "    User Type", "    Status"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblusers.setSelectionBackground(new java.awt.Color(0, 102, 102));
-        tblusers.setSelectionForeground(new java.awt.Color(255, 255, 254));
-        jScrollPane2.setViewportView(tblusers);
-
-        listofusers.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 370));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\listuser.png")); // NOI18N
-        jLabel8.setText("jLabel8");
-        listofusers.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
-
-        jPanel1.add(listofusers, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
-
-        trans.setOpaque(false);
-        trans.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtsearchtrans.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        trans.add(txtsearchtrans, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 190, 20));
-
-        btnsearcht.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\searchhh.png")); // NOI18N
-        btnsearcht.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnsearchtMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnsearchtMouseExited(evt);
-            }
-        });
-        btnsearcht.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsearchtActionPerformed(evt);
-            }
-        });
-        trans.add(btnsearcht, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 20, 20));
-
-        tbltrans.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tbltrans.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Transaction No.", "    Book ID", "    Book Title", "   Borrower", "    Date Borrowed", "      Status"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tbltrans.setSelectionBackground(new java.awt.Color(16, 119, 124));
-        tbltrans.setSelectionForeground(new java.awt.Color(255, 255, 254));
-        jScrollPane4.setViewportView(tbltrans);
-
-        trans.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 370));
-
-        btnreturn.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\return.png")); // NOI18N
-        btnreturn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnreturnActionPerformed(evt);
-            }
-        });
-        trans.add(btnreturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, 92, 32));
-
-        jLabel11.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\tr.png")); // NOI18N
-        jLabel11.setText("jLabel11");
-        trans.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
-
-        jPanel1.add(trans, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
-
-        pendingreq.setOpaque(false);
-        pendingreq.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtsearchp.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        pendingreq.add(txtsearchp, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 200, 20));
-
-        btnsearchreq.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\searchhh.png")); // NOI18N
-        btnsearchreq.setToolTipText("Search request");
-        btnsearchreq.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnsearchreqMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnsearchreqMouseExited(evt);
-            }
-        });
-        btnsearchreq.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsearchreqActionPerformed(evt);
-            }
-        });
-        pendingreq.add(btnsearchreq, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 20, 20));
-
-        btndisapprove.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\disapprove.png")); // NOI18N
-        btndisapprove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btndisapproveActionPerformed(evt);
-            }
-        });
-        pendingreq.add(btndisapprove, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 470, 92, 32));
-
-        btnapprove.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\appove.png")); // NOI18N
-        btnapprove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnapproveActionPerformed(evt);
-            }
-        });
-        pendingreq.add(btnapprove, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, 92, 32));
-
-        tblreq.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tblreq.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Transaction No.", "    Book ID", "   Book Title", "    Borrower"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblreq.setSelectionBackground(new java.awt.Color(0, 102, 102));
-        tblreq.setSelectionForeground(new java.awt.Color(255, 255, 254));
-        jScrollPane3.setViewportView(tblreq);
-
-        pendingreq.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 370));
-
-        jLabel10.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\request.png")); // NOI18N
-        jLabel10.setText("jLabel10");
-        pendingreq.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jPanel1.add(pendingreq, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
 
         listofbooks.setOpaque(false);
         listofbooks.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -531,7 +336,7 @@ public class Admin extends javax.swing.JFrame {
         txtsearchb.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         listofbooks.add(txtsearchb, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 200, 20));
 
-        btnsearch.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\searchhh.png")); // NOI18N
+        btnsearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/searchhh.png"))); // NOI18N
         btnsearch.setToolTipText("Search books");
         btnsearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -571,15 +376,210 @@ public class Admin extends javax.swing.JFrame {
 
         listofbooks.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 440));
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\listofwithoutline.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/listofwithoutline.png"))); // NOI18N
         jLabel7.setText("jLabel7");
         listofbooks.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
 
         jPanel1.add(listofbooks, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
 
+        pendingreq.setOpaque(false);
+        pendingreq.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtsearchp.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        pendingreq.add(txtsearchp, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 200, 20));
+
+        btnsearchreq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/searchhh.png"))); // NOI18N
+        btnsearchreq.setToolTipText("Search request");
+        btnsearchreq.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnsearchreqMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnsearchreqMouseExited(evt);
+            }
+        });
+        btnsearchreq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsearchreqActionPerformed(evt);
+            }
+        });
+        pendingreq.add(btnsearchreq, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 20, 20));
+
+        btndisapprove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/disapprove.png"))); // NOI18N
+        btndisapprove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndisapproveActionPerformed(evt);
+            }
+        });
+        pendingreq.add(btndisapprove, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 470, 92, 32));
+
+        btnapprove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/appove.png"))); // NOI18N
+        btnapprove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnapproveActionPerformed(evt);
+            }
+        });
+        pendingreq.add(btnapprove, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, 92, 32));
+
+        tblreq.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tblreq.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Transaction No.", "    Book ID", "   Book Title", "    Borrower"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblreq.setSelectionBackground(new java.awt.Color(0, 102, 102));
+        tblreq.setSelectionForeground(new java.awt.Color(255, 255, 254));
+        jScrollPane3.setViewportView(tblreq);
+
+        pendingreq.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 370));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/request.png"))); // NOI18N
+        jLabel10.setText("jLabel10");
+        pendingreq.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel1.add(pendingreq, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
+
+        trans.setOpaque(false);
+        trans.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtsearchtrans.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        trans.add(txtsearchtrans, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 190, 20));
+
+        btnsearcht.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/searchhh.png"))); // NOI18N
+        btnsearcht.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnsearchtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnsearchtMouseExited(evt);
+            }
+        });
+        btnsearcht.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsearchtActionPerformed(evt);
+            }
+        });
+        trans.add(btnsearcht, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 20, 20));
+
+        tbltrans.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tbltrans.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Transaction No.", "    Book ID", "    Book Title", "   Borrower", "    Date Borrowed", "      Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbltrans.setSelectionBackground(new java.awt.Color(16, 119, 124));
+        tbltrans.setSelectionForeground(new java.awt.Color(255, 255, 254));
+        jScrollPane4.setViewportView(tbltrans);
+
+        trans.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 370));
+
+        btnreturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/return.png"))); // NOI18N
+        btnreturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnreturnActionPerformed(evt);
+            }
+        });
+        trans.add(btnreturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, 92, 32));
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/tr.png"))); // NOI18N
+        jLabel11.setText("jLabel11");
+        trans.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
+
+        jPanel1.add(trans, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
+
+        listofusers.setOpaque(false);
+        listofusers.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtsearchu.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        listofusers.add(txtsearchu, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 200, 20));
+
+        btnseachu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/searchhh.png"))); // NOI18N
+        btnseachu.setToolTipText("Search user");
+        btnseachu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnseachuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnseachuMouseExited(evt);
+            }
+        });
+        btnseachu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnseachuActionPerformed(evt);
+            }
+        });
+        listofusers.add(btnseachu, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 20, 20));
+
+        btnupdateu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/update.png"))); // NOI18N
+        btnupdateu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnupdateuActionPerformed(evt);
+            }
+        });
+        listofusers.add(btnupdateu, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 470, 92, 32));
+
+        btnreg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/registeru.png"))); // NOI18N
+        btnreg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregActionPerformed(evt);
+            }
+        });
+        listofusers.add(btnreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 470, 92, 32));
+
+        tblusers.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tblusers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "    User ID", "    Name", "    User Type", "    Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblusers.setSelectionBackground(new java.awt.Color(0, 102, 102));
+        tblusers.setSelectionForeground(new java.awt.Color(255, 255, 254));
+        jScrollPane2.setViewportView(tblusers);
+
+        listofusers.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 540, 370));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/listuser.png"))); // NOI18N
+        jLabel8.setText("jLabel8");
+        listofusers.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 530));
+
+        jPanel1.add(listofusers, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 580, 530));
+
         btnlogout.setBackground(new java.awt.Color(255, 255, 255));
         btnlogout.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnlogout.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\logouts copy.png")); // NOI18N
+        btnlogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/logouts copy.png"))); // NOI18N
         btnlogout.setBorder(null);
         btnlogout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -598,7 +598,7 @@ public class Admin extends javax.swing.JFrame {
 
         btnborrowed.setBackground(new java.awt.Color(255, 255, 255));
         btnborrowed.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnborrowed.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\transhis.png")); // NOI18N
+        btnborrowed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/transhis.png"))); // NOI18N
         btnborrowed.setBorder(null);
         btnborrowed.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -617,7 +617,7 @@ public class Admin extends javax.swing.JFrame {
 
         btnlistofbooks.setBackground(new java.awt.Color(255, 255, 255));
         btnlistofbooks.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnlistofbooks.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\lists copy.png")); // NOI18N
+        btnlistofbooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/lists copy.png"))); // NOI18N
         btnlistofbooks.setBorder(null);
         btnlistofbooks.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -636,7 +636,7 @@ public class Admin extends javax.swing.JFrame {
 
         btnpending.setBackground(new java.awt.Color(255, 255, 255));
         btnpending.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnpending.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\req.png")); // NOI18N
+        btnpending.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/req.png"))); // NOI18N
         btnpending.setBorder(null);
         btnpending.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -655,7 +655,7 @@ public class Admin extends javax.swing.JFrame {
 
         btnlist.setBackground(new java.awt.Color(255, 255, 255));
         btnlist.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnlist.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\listu.png")); // NOI18N
+        btnlist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/listu.png"))); // NOI18N
         btnlist.setBorder(null);
         btnlist.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -674,7 +674,7 @@ public class Admin extends javax.swing.JFrame {
 
         btnregbook.setBackground(new java.awt.Color(255, 255, 255));
         btnregbook.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        btnregbook.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\registerb.png")); // NOI18N
+        btnregbook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/registerb.png"))); // NOI18N
         btnregbook.setBorder(null);
         btnregbook.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -700,7 +700,7 @@ public class Admin extends javax.swing.JFrame {
         lbladminusername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(lbladminusername, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 210, 200, 40));
 
-        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\win10dell\\Desktop\\LMS Icon\\admin.png")); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LMS Icon/admin.png"))); // NOI18N
         jLabel9.setText("jLabel9");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 630));
 
@@ -715,7 +715,7 @@ public class Admin extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(996, 669));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
